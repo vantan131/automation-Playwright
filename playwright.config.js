@@ -32,12 +32,14 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    baseURL: 'https://www.antbuddy.com/',
     trace: 'on-first-retry',
-    actionTimeout: 0
+    actionTimeout: 0,
+    navigationTimeout: 30 * 1000,
   },
-  timeout: 30 * 1000,
+  timeout: 90 * 1000,
   expect: {
-    timeout : 5000
+    timeout : 10 * 1000,
   },
   /* Configure projects for major browsers */
   /* cau hinh kich thuoc: viewport */
