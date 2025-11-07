@@ -26,7 +26,7 @@ export default defineConfig({
     baseURL: 'https://nghiatestsaas.beeiq.co',
 
     /* Giữ session đăng nhập nếu có file auth.json */
-    storageState: 'auth.json',
+    // storageState: 'auth.json',
 
     /* Timeout cho thao tác */
     actionTimeout: 15 * 1000,
