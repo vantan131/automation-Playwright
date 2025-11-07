@@ -1,44 +1,56 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: false, // ❌ Không nên chạy song song khi test production
+
+  /* Không nên chạy song song khi test production */
+  fullyParallel: false,
+
+  /* Ngăn commit code có test.only */
   forbidOnly: !!process.env.CI,
-  retries: 1, // thử lại 1 lần nếu fail
-  workers: 1, // chỉ 1 worker để tránh spam production
-  reporter: [['html', { open: 'never' }]],
+
+  /* Thử lại 2 lần nếu fail (CI chậm hơn local nhiều) */
+  retries: process.env.CI ? 2 : 1,
+
+  /* Chạy 1 worker để tránh tạo nhiều tab lên production */
+  workers: process.env.CI ? 1 : 1,
+
+  /* Báo cáo kết quả */
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+  ],
 
   use: {
-    storageState: 'auth.json', // 🔥 Dùng lại phiên đăng nhập
-    baseURL: 'https://nghiatestsaas.beeiq.co', // domain production của bạn
-    actionTimeout: 0,
-    navigationTimeout: 45 * 1000,
+    baseURL: 'https://nghiatestsaas.beeiq.co',
 
+    /* Giữ session đăng nhập nếu có file auth.json */
+    storageState: 'auth.json',
+
+    /* Timeout cho thao tác */
+    actionTimeout: 15 * 1000,
+    navigationTimeout: 60 * 1000,
+
+    /* Cấu hình hỗ trợ debug khi fail */
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
 
+    /* Môi trường chạy */
     viewport: { width: 1920, height: 1080 },
     launchOptions: {
-      slowMo: 300, // chậm thao tác cho dễ theo dõi
-      headless: false, // mở trình duyệt thật để bạn nhìn thấy
+      headless: process.env.CI ? true : false, // CI chạy headless, local thì thấy trình duyệt
+      slowMo: process.env.CI ? 0 : 300, // local chạy chậm cho dễ quan sát
     },
   },
 
-  timeout: 120 * 1000,
-  expect: { timeout: 15 * 1000 },
+  /* Timeout toàn bộ 1 test (CI thường bị chậm) */
+  timeout: 180 * 1000,
+
+  expect: {
+    timeout: 20 * 1000,
+  },
 
   projects: [
     {
@@ -47,5 +59,3 @@ export default defineConfig({
     },
   ],
 });
-
-
