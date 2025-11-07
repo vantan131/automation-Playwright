@@ -25,6 +25,5 @@ test('TC17:  kiểm tra khi nhập định dạng sai email', async ({ page }) =
   const borderColor = await emailInput.evaluate(el => getComputedStyle(el).borderColor);
   console.log('👉 Border color thực tế:', borderColor);
 
-  // Hệ thống dùng #F30C0C, nên ta kiểm tra tương ứng (so sánh RGB)
   await expect(borderColor.toLowerCase()).toMatch(/rgb\(243, 12, 12\)|#f30c0c/);
 });
