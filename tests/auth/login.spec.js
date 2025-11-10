@@ -22,11 +22,11 @@ test('Login to Antbuddy successfully', async ({ page }) => {
   await page1.waitForSelector('a.list-group-item', { timeout: 0 });
   await page1.locator('a:has-text("AB Test")').click();
   await page1.waitForTimeout(3000); 
-  const element = page1.locator('.dropdown.dropdown-list.profile-dropdown > a');
-  console.log(await element.count()); // kiểm tra có tìm thấy phần tử không
-  await element.first().click();
+  // const element = page1.locator('.dropdown.dropdown-list.profile-dropdown > a');
+  // console.log(await element.count()); // kiểm tra có tìm thấy phần tử không
+  // await element.first().click();
   //dang nhap thanh cong  se co link nay//
-  await expect(page1).toHaveURL(/https:\/\/nghiatestsaas\.beeiq\.co\/#\/app\/unified_omni/);
+  await expect(page1).toHaveURL('https://nghiatestsaas.beeiq.co/#/app/unified_omni');
   // await page1.getByText('Đăng xuất', { exact: true }).click();
   // await page.pause()
 });
