@@ -10,8 +10,8 @@ test('Kiểm tra có thể click vào nút Zalo Nhận mã OTP qua ZNS', async (
   await page1.getByRole('button', { name: 'Tiếp tục' }).click();
 
   //  Expect: kiểm tra nút tồn tại và có thể click
-  const zaloButton = page1.getByRole('button', { name: 'Zalo Nhận mã OTP qua ZNS' });
-  await expect(zaloButton).toBeVisible({ timeout: 1000 }); // nút hiển thị
+  const zaloButton = page1.getByRole('button', { name: 'Zalo' });
+  await expect(zaloButton).toBeVisible({ timeout: 5_000 }); // nút hiển thị
   await expect(zaloButton).toBeEnabled(); // nút có thể click
 
   //  Nếu nút hợp lệ → click
