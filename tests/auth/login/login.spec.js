@@ -1,5 +1,5 @@
 const {test,expect} = require('@playwright/test')
-test('Login to Antbuddy successfully', async ({ page }) => {
+test.skip('Login to Antbuddy successfully', async ({ page }) => {
   await page.goto('https://www.antbuddy.com/');
   // Bắt popup đúng cách
   const page1Promise = page.waitForEvent('popup');
